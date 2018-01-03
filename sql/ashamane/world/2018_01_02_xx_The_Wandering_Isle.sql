@@ -1,4 +1,5 @@
-SET @CGUID=450014;
+SET @CGUID=20550000;
+SET @OGUID=20400000;
 
 DELETE cta.* FROM creature c JOIN creature_template_addon cta ON (cta.entry=c.id) WHERE c.map=860 AND c.id!=6491;
 DELETE ga.* FROM gameobject g JOIN gameobject_addon ga ON (ga.guid=g.guid) WHERE g.map=860;
@@ -7,7 +8,6 @@ DELETE ss.* FROM creature c JOIN smart_scripts ss ON (ss.entryorguid/100=c.id) W
 DELETE ss.* FROM gameobject g JOIN smart_scripts ss ON (ss.entryorguid=g.id) WHERE g.map=860;
 
 DELETE FROM `gameobject` WHERE `map`=860;
-SET @OGUID=(SELECT IFNULL((SELECT MAX(`guid`)+1 FROM `gameobject`), 1));
 INSERT INTO `gameobject` (`guid`, `id`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseId`, `PhaseGroup`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`, `VerifiedBuild`) VALUES
 (@OGUID+0, 210986, 860, 0, 0, 1, 1328, 0, 1421.908, 3377.979, 192.9827, 5.979019, 0, 0, -0.1514978, 0.9884576, 5, 255, 1, 20886), -- 210986 (Area: 5834)
 (@OGUID+1, 210005, 860, 0, 0, 1, 598, 0, 1430.425, 3429.183, 171.14, 0.4014249, 0, 0, 0.1993675, 0.9799248, 0, 255, 1, 20886), -- 210005 (Area: 5834)
@@ -12766,25 +12766,3 @@ INSERT INTO `waypoints` (`entry`, `pointid`, `position_x`, `position_y`, `positi
 (62087, 12, 1647.685, -4355.607, 26.33666, 'Pause WP'),
 (62087, 13, 1639.243, -4358.776, 26.75091, ''),
 (62087, 14, 1637.854, -4359.377, 26.75178, 'Set Orientation, Play Emote');
-
--- UPDATE `spell_area` SET `quest_end`=0 WHERE `spell` IN (108834, 108835, 108844);
-/*
--- FOR TESTING PURPOSES
--- Don't use when hackfix in MiscPacket.cpp is applied
-UPDATE `creature` SET `PhaseId`=0, `PhaseGroup`=0 WHERE `map`=860;
-UPDATE `creature` SET `PhaseId`=838 WHERE `guid` IN (@CGUID+351, @CGUID+352, @CGUID+353);
-UPDATE `creature` SET `PhaseId`=504 WHERE `id` IN (54734, 54900, 54901, 54902);
-UPDATE `gameobject` SET `PhaseId`=0, `PhaseGroup`=0 WHERE `map`=860;
-UPDATE `gameobject` SET `PhaseId`=504 WHERE `id`=209375 OR (`id`=209373 AND `guid`=@OGUID+150) OR (`id`=209372 AND `guid`=@OGUID+151) OR (`id`=209374 AND `guid`=@OGUID+153);
-DELETE FROM `phase_area` WHERE `AreaId` IN (5736, 5834, 5825, 5843, 5846, 5835, 5849, 5847, 5820, 5947, 5826, 5860, 5862, 5827, 5881, 5882, 5883, 5884, 5828, 5837, 5829, 5830, 5831, 5946, 5886, 5859, 5832, 5941, 5833, 5737, 5944, 5945);
-DELETE FROM `smart_scripts` WHERE (`entryorguid`=56503 AND `id`=12) OR (`entryorguid`=54734 AND `id` IN (7, 8)) OR (`entryorguid`=54958 AND `id`=7) OR (`entryorguid`=60916 AND `id`=5) OR (`entryorguid`=64554 AND `id`=2) OR (`entryorguid`=64530 AND `id` IN (3, 4, 5)) OR (`entryorguid`=55595 AND `id` IN (2, 3, 4)) OR (`entryorguid`=55586 AND `id` IN (1, 2, 3)) OR (`entryorguid`=56159 AND `id`=12);
-UPDATE `smart_scripts` SET `id`=12 WHERE `entryorguid`=56503 AND `id`=13;
-UPDATE `smart_scripts` SET `link`=9 WHERE `entryorguid`=54734 AND `id`=6;
-UPDATE `smart_scripts` SET `link`=8 WHERE `entryorguid`=54958 AND `id`=6;
-UPDATE `smart_scripts` SET `link`=6 WHERE `entryorguid`=60916 AND `id`=4;
-UPDATE `smart_scripts` SET `event_type`=54 WHERE `entryorguid`=64554 AND `id`=3;
-UPDATE `smart_scripts` SET `link`=0 WHERE `entryorguid`=55595 AND `id`=1;
-UPDATE `smart_scripts` SET `link`=6 WHERE `entryorguid`=64530 AND `id`=2;
-UPDATE `smart_scripts` SET `link`=0 WHERE `entryorguid`=55586 AND `id`=0;
-UPDATE `smart_scripts` SET `link`=13 WHERE `entryorguid`=56159 AND `id`=11;
-*/
