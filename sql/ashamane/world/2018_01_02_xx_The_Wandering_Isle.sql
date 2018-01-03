@@ -1,12 +1,6 @@
 SET @CGUID=20550000;
 SET @OGUID=20400000;
 
-DELETE cta.* FROM creature c JOIN creature_template_addon cta ON (cta.entry=c.id) WHERE c.map=860 AND c.id!=6491;
-DELETE ga.* FROM gameobject g JOIN gameobject_addon ga ON (ga.guid=g.guid) WHERE g.map=860;
-DELETE ss.* FROM creature c JOIN smart_scripts ss ON (ss.entryorguid=c.id) WHERE c.map=860;
-DELETE ss.* FROM creature c JOIN smart_scripts ss ON (ss.entryorguid/100=c.id) WHERE c.map=860;
-DELETE ss.* FROM gameobject g JOIN smart_scripts ss ON (ss.entryorguid=g.id) WHERE g.map=860;
-
 DELETE FROM `gameobject` WHERE `map`=860;
 INSERT INTO `gameobject` (`guid`, `id`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseId`, `PhaseGroup`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`, `VerifiedBuild`) VALUES
 (@OGUID+0, 210986, 860, 0, 0, 1, 1328, 0, 1421.908, 3377.979, 192.9827, 5.979019, 0, 0, -0.1514978, 0.9884576, 5, 255, 1, 20886), -- 210986 (Area: 5834)
