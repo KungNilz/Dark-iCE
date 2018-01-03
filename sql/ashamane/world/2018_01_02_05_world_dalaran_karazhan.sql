@@ -2537,9 +2537,9 @@ DELETE FROM `gossip_menu` WHERE (`MenuId`=20457 AND `TextID`=30756);
 INSERT INTO `gossip_menu` (`MenuId`, `TextID`) VALUES
 (20457, 30756); -- 113986
 
-DELETE FROM `gossip_menu_option` WHERE (`MenuId`=20457 AND `OptionID`=1);
-INSERT INTO `gossip_menu_option` (`MenuId`, `OptionID`, `OptionIcon`, `OptionText`, `OptionBroadcastTextId`) VALUES
-(20457, 1, 0, 'I\' ready, begin the teleportation of Dalaran to the broken islands.', 0);
+DELETE FROM `gossip_menu_option` WHERE (`MenuId`=20457);
+INSERT INTO `gossip_menu_option` (`MenuId`, `OptionID`, `OptionIcon`, `OptionText`, `OptionBroadcastTextId`, `OptionType`, `OptionNpcflag`) VALUES
+(20457, 1, 0, 'I\'m ready, begin the teleportation of Dalaran to the broken islands.', 0, 1, 1);
 
 DELETE FROM `gossip_menu_option_locale` WHERE (`MenuId`=20457 AND `OptionID`=1);
 INSERT INTO `gossip_menu_option_locale` (`MenuId`, `OptionID`, `Locale`, `OptionText`) VALUES
@@ -3605,10 +3605,25 @@ UPDATE `creature_template` SET scriptname = "npc_dalaran_karazhan_khadgar" WHERE
 UPDATE `scene_template` SET scriptname = "scene_dalaran_kharazan_teleportion" WHERE SceneId = 1449;
 
 DELETE FROM spell_script_names WHERE ScriptName = "spell_dalaran_teleportation";
-INSERT INTO spell_script_names VALUES (228330, "spell_dalaran_teleportation");
+INSERT INTO spell_script_names VALUES
+(228329, "spell_dalaran_teleportation"),
+(228330, "spell_dalaran_teleportation");
+
+DELETE FROM spell_target_position WHERE ID IN (228326, 228327, 223199, 225203);
+INSERT INTO spell_target_position VALUES
+(228326, 0, 0, -11099.8, -2212.36, 757.83, 22566),
+(228327, 0, 0, -11099.8, -2212.36, 757.83, 22566),
+(223199, 0, 1220, -828.72, 4371.78, 738.64, 22566),
+(225203, 0, 1220, -828.72, 4371.78, 738.64, 22566);
 
 DELETE FROM `npc_text` WHERE `ID`=30756;
 INSERT INTO `npc_text` (`ID`, `Probability0`, `Probability1`, `Probability2`, `Probability3`, `Probability4`, `Probability5`, `Probability6`, `Probability7`, `BroadcastTextId0`, `BroadcastTextId1`, `BroadcastTextId2`, `BroadcastTextId3`, `BroadcastTextId4`, `BroadcastTextId5`, `BroadcastTextId6`, `BroadcastTextId7`, `VerifiedBuild`) VALUES
 (30756, 1, 0, 0, 0, 0, 0, 0, 0, 123548, 0, 0, 0, 0, 0, 0, 0, 25549); -- 30756
 
+DELETE FROM `phase_area` WHERE `AreaId` = 41 AND PhaseId = 5829;
+INSERT INTO `phase_area` (`AreaId`, `PhaseId`, `Comment`) VALUES
+(41, 5829, "Dalaran above Karazhan - Legion start quests");
 
+DELETE FROM conditions WHERE SourceTypeOrReferenceId = 26 AND SourceGroup = 5829 AND SourceEntry = 41;
+INSERT INTO conditions VALUES
+(26, 5829, 41, 0, 1, 47, 0, 44663, 10, 0, 0, 0, 0, "", "In the Blink of an Eye Quest - Dalaran above Karazhan phase");
